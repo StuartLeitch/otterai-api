@@ -1,0 +1,4 @@
+build/*
+**/__pycache__/*
+otterai.egg-info/SOURCES.txt
+.env
