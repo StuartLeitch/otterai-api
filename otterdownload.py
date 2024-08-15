@@ -40,7 +40,7 @@ while True:
 
     if latest_load_date is None:
         # set to 5 years ago
-        latest_load_date = datetime.datetime.now() - datetime.timedelta(days=300)
+        latest_load_date = datetime.datetime.now() - datetime.timedelta(days=365*5)
 
     otter = OtterAI()
     otter.login(os.getenv('OTTER_USER'), os.getenv('OTTER_PASS'))
