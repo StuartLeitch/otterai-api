@@ -83,11 +83,12 @@ class OtterAI:
         
         if last_load_ts != None:
             payload = {'userid': self._userid, 
-                    'folder': folder, 
+                    # 'folder': folder, 
                     'page_size': page_size, 
                     'last_load_ts':last_load_ts,
                     'modified_after': int(time.time()), 
-                    'source': source}
+                    # 'source': source
+                    }
         # GET
         response = self._session.get(speeches_url, params=payload)
 
@@ -99,12 +100,31 @@ class OtterAI:
         if self._is_userid_invalid():
             raise OtterAIException('userid is invalid')
         # Query Params
-        payload = {'userid': self._userid, 'otid': speech_id}
+        payload = {'userid': self._userid, 'otid': speech_id, 'metadata': 'true'}
         # GET
         response = self._session.get(speech_url, params=payload)
 
         return self._handle_response(response)
     
+    def get_abstract(self, speech_id):
+        # API URL
+        speech_url = OtterAI.API_BASE_URL + 'abstract_summary'
+        if self._is_userid_invalid():
+            raise OtterAIException('userid is invalid')
+        # Query Params
+        payload = {'userid': self._userid, 'otid': speech_id}
+        # GET
+        response = self._session.get(speech_url, params=payload)
+
+
+        response_data = self._handle_response(response)['data']
+        if response_data['abstract_summary'] == None:
+            return '<Summary></Summary>'
+        if response_data['abstract_summary']['short_summary'] == None:
+            return '<Summary></Summary>'
+        
+        return '<Summary>' + '\n' + response_data['abstract_summary']['short_summary'] + '\n</Summary>'
+
     def download_speech(self, speech_id, name=None, pathname=None, fileformat="txt,pdf,mp3,docx,srt"):
         # API URL
         download_speech_url = OtterAI.API_BASE_URL + 'bulk_export'

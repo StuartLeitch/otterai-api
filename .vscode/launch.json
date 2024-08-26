@@ -5,11 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Current File",
+            "name": "Otter Downloader",
             "type": "debugpy",
             "request": "launch",
             "program": "otterdownload.py",
             "console": "integratedTerminal"
         }
+        ,
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }        
     ]
 }
